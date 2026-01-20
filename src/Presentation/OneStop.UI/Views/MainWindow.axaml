@@ -61,15 +61,56 @@
 
                 <TransitioningContentControl.ContentTemplate>
                     <DataTemplate x:DataType="vm:ViewModelBase">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="{Binding Title}" 
-                                       FontSize="32" 
-                                       FontWeight="Light" 
-                                       Foreground="#aaaaaa"/>
-                            <TextBlock Text="Module Ready" 
-                                       HorizontalAlignment="Center" 
-                                       Foreground="Gray"/>
-                        </StackPanel>
+                        <ContentControl Content="{Binding}">
+                            <ContentControl.DataTemplates>
+                                
+                                <DataTemplate DataType="vm:InventoryViewModel" x:DataType="vm:InventoryViewModel">
+                                    <Grid RowDefinitions="Auto,*">
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                                            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Light" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                                            
+                                            <Button Content="Refresh Data" 
+                                                    Command="{Binding LoadDataCommand}" 
+                                                    Margin="0,0,10,0"/>
+                                            
+                                            <Button Content="Generate Dummy" 
+                                                    Command="{Binding SeedDataCommand}" 
+                                                    Background="#2e7d32" 
+                                                    Foreground="White"/>
+                                        </StackPanel>
+
+                                        <DataGrid Grid.Row="1" 
+                                                  ItemsSource="{Binding Ingredients}"
+                                                  AutoGenerateColumns="False"
+                                                  IsReadOnly="True"
+                                                  GridLinesVisibility="All"
+                                                  BorderThickness="1" BorderBrush="#333333"
+                                                  Background="#1e1e1e">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                                                <DataGridTextColumn Header="Stock" Binding="{Binding CurrentStock}" Width="Auto"/>
+                                                <DataGridTextColumn Header="Unit" Binding="{Binding Unit.Name}" Width="Auto"/>
+                                                <DataGridTextColumn Header="Price (Avg)" Binding="{Binding CurrentPricePerUnit}" Width="Auto"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </DataTemplate>
+
+                                <DataTemplate DataType="vm:ViewModelBase" x:DataType="vm:ViewModelBase">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}" 
+                                                   FontSize="32" 
+                                                   FontWeight="Light" 
+                                                   Foreground="#aaaaaa"/>
+                                        <TextBlock Text="Module Under Construction" 
+                                                   HorizontalAlignment="Center" 
+                                                   Foreground="Gray"
+                                                   Margin="0,10,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                                
+                            </ContentControl.DataTemplates>
+                        </ContentControl>
                     </DataTemplate>
                 </TransitioningContentControl.ContentTemplate>
             </TransitioningContentControl>

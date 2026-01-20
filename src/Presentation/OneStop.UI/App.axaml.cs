@@ -4,7 +4,8 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OneStop.Persistence;
+using OneStop.Infrastructure; // Namespace untuk AddInfrastructure
+using OneStop.Persistence;    // Namespace untuk AddPersistence
 using OneStop.UI.ViewModels;
 using OneStop.UI.Views;
 using System;
@@ -12,10 +13,14 @@ using System.IO;
 
 namespace OneStop.UI;
 
-public partial class App : Application
+// PERBAIKAN: Menggunakan 'Avalonia.Application' secara eksplisit
+// untuk menghindari bentrok dengan namespace 'OneStop.Application'
+public partial class App : Avalonia.Application
 {
-    // Property global untuk menyimpan DI Container
-    public new static App? Current => Application.Current as App;
+    // Property helper untuk akses global (jika dibutuhkan)
+    public new static App? Current => Avalonia.Application.Current as App;
+
+    // Property untuk menyimpan Dependency Injection Container
     public IServiceProvider? Services { get; private set; }
 
     public override void Initialize()
@@ -32,27 +37,28 @@ public partial class App : Application
 
         IConfiguration configuration = builder.Build();
 
-        // 2. Setup Dependency Injection
+        // 2. Setup Service Collection (Wadah Dependency Injection)
         var services = new ServiceCollection();
 
-        // Inject Database (Layer Persistence)
-        // Pastikan OneStop.Persistence sudah di-reference di project ini
+        // -> Inject Database (Layer Persistence)
         services.AddPersistence(configuration);
 
-        // Inject ViewModels
-        // Kita pakai MainWindowViewModel sesuai perubahan terakhir
+        // -> Inject Services Backend (Layer Infrastructure)
+        services.AddInfrastructure();
+
+        // -> Inject ViewModels (Layer Presentation)
         services.AddTransient<MainWindowViewModel>();
 
-        // 3. Build Provider (Simpan ke property Services)
+        // 3. Build Service Provider (Kunci konfigurasi)
         Services = services.BuildServiceProvider();
 
         // 4. Setup Main Window
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Hapus validator bawaan Avalonia agar log bersih
+            // Menghapus validasi data bawaan Avalonia (opsional, agar log lebih bersih)
             BindingPlugins.DataValidators.RemoveAt(0);
 
-            // Ambil ViewModel dari DI Container
+            // Ambil ViewModel dari DI Container (Otomatis inject semua dependency)
             var mainViewModel = Services.GetRequiredService<MainWindowViewModel>();
 
             desktop.MainWindow = new MainWindow

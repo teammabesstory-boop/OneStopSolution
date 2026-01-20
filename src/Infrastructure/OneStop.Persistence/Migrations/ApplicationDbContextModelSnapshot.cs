@@ -65,8 +65,14 @@ namespace OneStop.Persistence.Migrations
                     b.Property<decimal>("CurrentPricePerUnit")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("CurrentStock")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("LastPriceUpdate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("MinimumStock")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -148,7 +154,7 @@ namespace OneStop.Persistence.Migrations
 
             modelBuilder.Entity("OneStop.Domain.Modules.Production.Ingredient", b =>
                 {
-                    b.OwnsOne("OneStop.Domain.Modules.Production.Unit", "StockUnit", b1 =>
+                    b.OwnsOne("OneStop.Domain.Modules.Production.Unit", "Unit", b1 =>
                         {
                             b1.Property<Guid>("IngredientId")
                                 .HasColumnType("uuid");
@@ -157,17 +163,17 @@ namespace OneStop.Persistence.Migrations
                                 .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("character varying(10)")
-                                .HasColumnName("StockUnit_Code");
+                                .HasColumnName("Unit_Code");
 
                             b1.Property<decimal>("ConversionFactorToBase")
                                 .HasColumnType("decimal(18,4)")
-                                .HasColumnName("StockUnit_Factor");
+                                .HasColumnName("Unit_Factor");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
                                 .HasMaxLength(50)
                                 .HasColumnType("character varying(50)")
-                                .HasColumnName("StockUnit_Name");
+                                .HasColumnName("Unit_Name");
 
                             b1.HasKey("IngredientId");
 
@@ -177,7 +183,7 @@ namespace OneStop.Persistence.Migrations
                                 .HasForeignKey("IngredientId");
                         });
 
-                    b.Navigation("StockUnit")
+                    b.Navigation("Unit")
                         .IsRequired();
                 });
 

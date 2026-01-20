@@ -2,6 +2,6 @@
 
 public class ProductionViewModel : ViewModelBase
 {
-    public string Title => "Recipe Engineering";
-    // Nanti kita isi dengan Editor Resep
+    // FIX: Tambahkan keyword 'override'
+    public override string Title => "Recipe Engineering";
 }
