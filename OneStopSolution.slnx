@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/OneStop.Application/OneStop.Application.csproj" />
+    <Project Path="src/Core/OneStop.Domain/OneStop.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/OneStop.Infrastructure/OneStop.Infrastructure.csproj" />
+    <Project Path="src/Infrastructure/OneStop.Persistence/OneStop.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/OneStop.UI/OneStop.UI.csproj" />
+  </Folder>
+</Solution>

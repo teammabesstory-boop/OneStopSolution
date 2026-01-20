@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Avalonia" Version="11.0.6" />
+	  <PackageReference Include="Avalonia.Desktop" Version="11.0.6" />
+	  <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.6" />
+	  <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.6" />
+	  <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.6" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	    <PrivateAssets>all</PrivateAssets>
+	  </PackageReference>
+
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\OneStop.Application\OneStop.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OneStop.Infrastructure\OneStop.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OneStop.Persistence\OneStop.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

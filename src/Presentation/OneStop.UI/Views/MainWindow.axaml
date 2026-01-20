@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:OneStop.UI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="OneStop.UI.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="OneStop ERP System (God Mode)">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <SplitView IsPaneOpen="True"
+               DisplayMode="CompactInline"
+               OpenPaneLength="250"
+               CompactPaneLength="50"
+               Background="#1e1e1e"
+               PaneBackground="#252526">
+
+        <SplitView.Pane>
+            <StackPanel Margin="0,20,0,0">
+                <TextBlock Text="ONESTOP" 
+                           Foreground="White" 
+                           FontWeight="Bold" 
+                           FontSize="18" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+
+                <ListBox ItemsSource="{Binding MenuItems}" 
+                         SelectedItem="{Binding SelectedMenuItem}"
+                         Background="Transparent"
+                         SelectionMode="Single">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="12,8"/>
+                            <Setter Property="CornerRadius" Value="4"/>
+                            <Setter Property="Margin" Value="8,2"/>
+                        </Style>
+                    </ListBox.Styles>
+                    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="vm:MenuItem"> 
+                            <StackPanel Orientation="Horizontal" Spacing="15">
+                                <Border Width="20" Height="20" Background="Gray" CornerRadius="3"/>
+                                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" FontWeight="Medium"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </SplitView.Pane>
+
+        <Border Background="#1e1e1e" Padding="20">
+            <TransitioningContentControl Content="{Binding CurrentPage}">
+                <TransitioningContentControl.PageTransition>
+                    <CrossFade Duration="0:00:00.250" />
+                </TransitioningContentControl.PageTransition>
+
+                <TransitioningContentControl.ContentTemplate>
+                    <DataTemplate x:DataType="vm:ViewModelBase">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding Title}" 
+                                       FontSize="32" 
+                                       FontWeight="Light" 
+                                       Foreground="#aaaaaa"/>
+                            <TextBlock Text="Module Ready" 
+                                       HorizontalAlignment="Center" 
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TransitioningContentControl.ContentTemplate>
+            </TransitioningContentControl>
+        </Border>
+    </SplitView>
+</Window>
